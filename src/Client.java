@@ -150,9 +150,7 @@ public class Client extends JFrame
         //Message message;
 
         startClient();
-
-
-
+        
     }
 
     private void startClient()
