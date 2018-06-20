@@ -1,0 +1,145 @@
+***SERVER NOTES***
+
+The server will need to accept an object from the client and then use information from the object to determine whether it is a registration request,
+a login request, a sent message, etc rather than listening for multiple different types of objects. Consider creating a general object container from
+which each specific object type will be inherited. For example IMObject, which contains one private field - objectType--probably an INT for simplicity--
+which describes what type of object is being transmitted, as well as one getter and one setter method for this field, plus several public constants that will 
+denote the object type. This will allow the server to query the object for the type that it is without causing errors, and then it can re-wrap the object
+with the appropriate specific object type, i.e. a messageObject.
+
+Each connection request will need to operate on its own thread so that the server doesn't get gummmed up with multiple requests coming in at once.
+
+Will need to synchronize access to the various userlists to prevent inconsistencies in data. For instance, if two clients are attempting a registration request
+simultaneously, one may update the userlist after the other has checked the userlist for updates prior to submitting its own update, potentially leading to an overwrite of one of the registration
+requests. Carefully consider how many checks a process should make on the various userlists prior to updating them.
+
+The server should have gui features that allow graphical access to various information, such as the list of registered users, online users, messaging logs which would include
+sender/recipient/timestamp/etc. Determine whether this information should be presented in the main view of the server or if buttons should be used to open new windows containing
+these details. Also, for logging info, should be able to filter information based on sender, recipient, date/time, and possibly message content. Will need to organize logging information
+into some type of table-like format.
+
+Will need to log failed message information, such as an attempted message to an offline user or to a user not connected to the sender (they aren't friends)
+
+at login, the server will need to communicate to the client any users listed as active to the client provided those users are "friends" of the first user.
+
+In order to be able to route messages between clients, the server will need to keep track of each individual ServeAClient object that is created and possibly the Thread object used
+to start the ServeAClient's run() method. Consider using a list of ServeAClient objects and a list of Thread objects. Both lists will likely need to be defined as global fields in the 
+Server class. I may need to design a routeAMessage method in the Server class that can be called from the ServeAClient class when a new message is received. The routeAMessage would need
+to read the target recipient from the message object and use that to locate the appropriate ServeAClient object in the ServeAClient list. The ServeAClient class will need a sendAMessage method
+to receive the message object from the Client class, which will then send the received message to the recipient associated with that ServeAClient object.
+
+ServeAClient will need a global field that identifies which client it is serving. Initially this value will be arbitrarily determined by the Server class, but in future versions the value will be
+determined based on username. That's a ways from now, though.
+
+Until a proper buddy list system is implemented in the Client class, a way of identifying users to send messages to needs to be developed. This could be done by keeping a record of client names
+as they connect to the server. Upon each new client connect, a message will need to be sent back to all connected clients with the updated userlist. I may need to add a field common to all types of
+messages that can be sent, as this userlist will be a different sort of message than the ones which contain actual messages intended for specific recipients. Perhaps a new abstract class needs to be
+implemented, possibly called Communication, that has the bare minimum necessary for all types of Message objects. This class would contain a flag that denotes the type of message that is being sent
+so that the Server and Client objects can then process it accordingly. A new child class of Communication called UserList should be designed to transport a list object of users to allow updates to userlists
+between clients and server.
+
+The code to send a message from a ServeAClient object to a client needs to be handled within a method and called from the ServeAClient's run method.
+
+Consider using a cached thread pool instead of individual threads for each socket connection. This may enhance performance by allowing a thread whose connection has ended to be used for a new connection
+rather than leaving it in memory while more threads are created for new connections.
+
+The Server only needs to parse received Communication objects into Message objects or Registration objects. 
+
+
+***SERVER NOTES***
+
+
+--Server--
+
+load graphical components
+
+check for registered userlist from storage
+
+	if registered userlist exists, load userslist into memory
+
+start listening for registration requests
+	
+	if registration request received, check username does not exist in registered userlist
+		
+		if username does not exist, store registration information and add username to registered userlist
+			
+			reload updated userlist into memory and respond with affirmative registration
+		
+		else, respond with negative registration
+	
+start listening for login requests
+
+	if a login request, check username exists in registered userlist
+		
+		if username exists, respond with affirmative login, add username to active userlist
+		
+		else, respond with negative login
+	
+start listening for sent messages
+	
+	if sent message received, send affirmative received status, check listed recipient exists in registered userlist
+	
+		if recipient exists in registered userlist, check user exists in active userlist
+			
+			if recipient exists in active userlist, route message to recipient and listen for received status
+			
+			
+			
+			
+			
+***CLIENT NOTES***
+
+initial window will display login fields for username (no password will be used for the initial program, may be added later). A section of this window will be reserved for
+status messages, such as an indication of a lack of internet connectivity or an incorrectly entered username. (Consider storing usernames as a dropdown for easier login experience)
+
+buddy list window will appear after a successful login and listen for active users that exist in the buddy list. active users will be denoted with some special markup, such as bold text
+and/or a green bubble icon of some sort. inactive users will be denoted with alternative markup, such as greyed text and italics.
+
+each buddy list entry needs to be a selectable/clickable entry to allow a user to send messages to that buddy, delete them, or otherwise interact with that buddy. As of the intial release
+of this program, blocking will not be possible. This may be added later.
+
+message windows should be their own classes to allow for encapsulation and instantiation. Will likely need to extend the JFrame class. They will need a text display area where sent and received messages
+will be displayed, a text entry area for typing messages, and possibly a "send" button that may be tied to the "enter" key for easy sending of messages. Note, if tied to the "enter" key, SHIFT+ENTER should
+insert a new line in the text entry window.
+
+Messages will need to be encapsulated into a Message object, which will include a timestamp for when the message was sent, the content of the message, the message sender, the recipient, etc.
+
+the buddy list will need to be constantly listening for updated information from the server, such as buddy login/logout events, loss of connection, etc. Consider creating a simple Status object to be
+passed back and forth between client and server every so often to trigger status update events and ensure connectivity is maintained
+
+Until a proper buddylist is implemented, the server will keep track of all clients connecting to it. Upon a client connect, the server will send back a UserList object to each client updating the clients
+available to receive messages. This can be stored as an uneditable dropdown list in the client UI. For its first iteration, clients will be given generic names assigned by the server, which will be used as
+the title for the Client object frame.
+
+As the program currently stands, recipients of messages will receive all messages from any sender within the same window. This will make it a bit confusing for the recipient to keep track of conversations
+with multiple senders. Consider creating a MessageWindow object that receives messages from specific senders. The client program should check for the existence of a MessageWindow object for a specific sender
+of a Message object. If one is not found, one should be created. If one is found, the message should be processed by that MessageWindow object and displayed. This means that the main window of the client cannot
+be a message window, which is how it is currently set up. The main client window will need to be changed to a buddy list of some sort. The initial version can be a simple window with a button that says "new conversation."
+A new window can be generated with a list of active users that the user will select from. The client will then generate a MessageWindow object for that conversation. Consider calling the MessageWindow object a
+Conversation object. You may need to devise a way of multithreading each conversation so that a backup/bottleneck of messages from multiple senders does not occur.
+
+
+***CLIENT NOTES***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
