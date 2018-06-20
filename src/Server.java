@@ -83,7 +83,15 @@ public class Server extends JFrame
         startServer();
 
     }
-
+    /**
+     *  Method to initiate server functionality. Creates a server socket connection and waits
+     *  for connection requests from clients. Creates a thread pool to handle each individual client connection.
+     *  Upon connection, displays connection logging information on the serverLogs text box. Creates a new
+     *  ServeAClient object to handle incoming and outgoing communications between the server and the client.
+     *  Gives each connecting client a name. Adds each ServeAClient object to the activeClientList for easy referencing.
+     *  Starts each ServeAClient task. Calls the updateAllClientUserLists method to inform each client of the new client
+     *  connection.
+     */
     private void startServer()
     {
 

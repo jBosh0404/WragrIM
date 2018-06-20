@@ -149,6 +149,15 @@ public class Client extends JFrame
 
         //Message message;
 
+        startClient();
+
+
+
+    }
+
+    private void startClient()
+    {
+
         try
         {
 
@@ -174,8 +183,6 @@ public class Client extends JFrame
             this.dispose();*/
 
         }
-
-
 
     }
 
