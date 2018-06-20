@@ -45,7 +45,7 @@ public class Server extends JFrame
     private List<String> activeUsers = new ArrayList<>();
 
     /**
-     *  The main method. Creates the Server object and starts the program.
+     *  The main method. Creates the Server object.
      */
     public static void main(String[] args)
     {
@@ -54,7 +54,7 @@ public class Server extends JFrame
 
     /**
      *  The default constructor. Initializes the GUI for the Server object and calls the
-     *  method
+     *  startServer() method.
      */
     public Server()
     {
@@ -81,49 +81,6 @@ public class Server extends JFrame
         setVisible(true);
 
         startServer();
-
-        /*try
-        {
-
-            ServerSocket serverSocket = new ServerSocket(8000);
-            serverLogs.append("Server started at " + new Date() + '\n');
-            ExecutorService executor = Executors.newCachedThreadPool();
-
-            int clientNo = 1;
-
-            while (true)
-            {
-
-                Socket socket =  serverSocket.accept();
-
-                serverLogs.append("Starting thread for client " + clientNo + " at " + new Date() + '\n');
-
-                InetAddress inetAddress = socket.getInetAddress();
-                serverLogs.append("Client " + clientNo + "'s host name is " + inetAddress.getHostName() + '\n');
-                serverLogs.append("Client " + clientNo + "'s IP Address is " + inetAddress.getHostAddress() + '\n');
-
-                String clientName = "Client " + clientNo;
-
-                ServeAClient task = new ServeAClient(socket, clientName);
-
-                activeClientList.add(task);
-
-                executor.execute(task);
-
-                activeUsers.add(clientName);
-
-                updateAllClientUserLists();
-
-                clientNo++;
-
-            }
-
-        } catch(IOException ex)
-        {
-
-            System.err.println(ex);
-
-        }*/
 
     }
 
