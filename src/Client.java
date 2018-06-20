@@ -231,7 +231,6 @@ public class Client extends JFrame
                     jcUserList.addItem(userList.getUserList().get(i));
 
                 }
-                this.repaint();
 
             }
 
