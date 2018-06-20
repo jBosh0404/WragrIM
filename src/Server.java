@@ -12,18 +12,50 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *  Creates a server to process incoming communications from connected clients and route them to the
+ *  appropriate client recipient *
+ */
 public class Server extends JFrame
 {
 
+    /*
+        create global variables for a text box to display log information for the server
+        as well as two lists, one to hold references to each ServeAClient object so that
+        each client can be referenced and contacted as needed and one to hold a simple text
+        list of users who are currently active on the server to provide a simple means of
+        informing each client of the currently active users.
+     */
+    /**
+     *  The main text box, used to display log information for the server, such as client connect
+     *  events, updates to clients' user lists, etc.     *
+     */
     private JTextArea serverLogs = new JTextArea();
+
+    /**
+     *  A list of ServeAClient objects to allow the server to reference the correct client when
+     *  receiving or transmitting a Communication object.     *
+     */
     private List<ServeAClient> activeClientList = new ArrayList<>();
+
+    /**
+     *  A list of String names for each user who is currently connected to the server. Used to
+     *  easily transmit updates of new connected users to each connected client.
+     */
     private List<String> activeUsers = new ArrayList<>();
 
+    /**
+     *  The main method. Creates the Server object and starts the program.
+     */
     public static void main(String[] args)
     {
         new Server();
     }
 
+    /**
+     *  The default constructor. Initializes the GUI for the Server object and calls the
+     *  method
+     */
     public Server()
     {
 
@@ -47,6 +79,56 @@ public class Server extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);
+
+        startServer();
+
+        /*try
+        {
+
+            ServerSocket serverSocket = new ServerSocket(8000);
+            serverLogs.append("Server started at " + new Date() + '\n');
+            ExecutorService executor = Executors.newCachedThreadPool();
+
+            int clientNo = 1;
+
+            while (true)
+            {
+
+                Socket socket =  serverSocket.accept();
+
+                serverLogs.append("Starting thread for client " + clientNo + " at " + new Date() + '\n');
+
+                InetAddress inetAddress = socket.getInetAddress();
+                serverLogs.append("Client " + clientNo + "'s host name is " + inetAddress.getHostName() + '\n');
+                serverLogs.append("Client " + clientNo + "'s IP Address is " + inetAddress.getHostAddress() + '\n');
+
+                String clientName = "Client " + clientNo;
+
+                ServeAClient task = new ServeAClient(socket, clientName);
+
+                activeClientList.add(task);
+
+                executor.execute(task);
+
+                activeUsers.add(clientName);
+
+                updateAllClientUserLists();
+
+                clientNo++;
+
+            }
+
+        } catch(IOException ex)
+        {
+
+            System.err.println(ex);
+
+        }*/
+
+    }
+
+    private void startServer()
+    {
 
         try
         {
