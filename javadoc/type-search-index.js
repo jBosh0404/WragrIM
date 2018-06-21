@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"<Unnamed>","l":"Server"},{"p":"<Unnamed>","l":"Server.ServeAClient"}]
+typeSearchIndex = [{"p":"<Unnamed>","l":"Client"},{"p":"<Unnamed>","l":"Client.MessageBtnListener"},{"p":"<Unnamed>","l":"Communication"},{"p":"<Unnamed>","l":"Message"},{"p":"<Unnamed>","l":"Server"},{"p":"<Unnamed>","l":"Server.ServeAClient"},{"p":"<Unnamed>","l":"UserList"}]

@@ -251,7 +251,7 @@ public class Client extends JFrame
 
     /**
      * The method that listens for communications from the server and sends them to be processed into the appropriate
-     * child object of the Communication class. Also includes a flavorful message in the event of a ClassNotFoundException.
+     * child object of the Communication interface. Also includes a flavorful message in the event of a ClassNotFoundException.
      * @throws IOException Allows any potential IOException to be handled by the calling statement rather than
      * within the method declaration.
      */

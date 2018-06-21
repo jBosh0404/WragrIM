@@ -134,7 +134,7 @@ public class Server extends JFrame
     }
 
     /**
-     * Method to process a Communication object into an appropriate child object of the Communication class. <p></p>
+     * Method to process a Communication object into an appropriate child object of the Communication interface. <p></p>
      * Currently only supports Message objects.
      * @param communication The Communication object to be processed
      */
