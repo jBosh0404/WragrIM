@@ -235,11 +235,11 @@ public class Server extends JFrame
 
         }
 
-        @Override
         /**
          * Override of the Runnable.run() method. Constantly listens for communications from the assigned
          * client.
          */
+        @Override
         public void run()
         {
 

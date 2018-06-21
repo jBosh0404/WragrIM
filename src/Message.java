@@ -1,6 +1,9 @@
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ */
 public class Message implements Communication, Serializable
 {
 
@@ -10,6 +13,11 @@ public class Message implements Communication, Serializable
     private String message;
     private Date date;
 
+    /**
+     *
+     * @param message
+     * @param commType
+     */
     public Message(String message, int commType)
     {
 
@@ -18,6 +26,12 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @param message
+     * @param date
+     * @param commType
+     */
     public Message(String message, Date date, int commType)
     {
 
@@ -27,6 +41,14 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @param message
+     * @param sender
+     * @param recipient
+     * @param date
+     * @param commType
+     */
     public Message(String message, String sender, String recipient, Date date, int commType)
     {
 
@@ -38,6 +60,10 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMessage()
     {
 
@@ -45,6 +71,10 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSender()
     {
 
@@ -52,6 +82,10 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRecipient()
     {
 
@@ -59,6 +93,10 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getDate()
     {
 
@@ -66,6 +104,10 @@ public class Message implements Communication, Serializable
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getCommType()
     {
