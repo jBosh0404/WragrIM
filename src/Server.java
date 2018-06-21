@@ -14,27 +14,19 @@ import java.util.concurrent.Executors;
 
 /**
  *  Creates a server to process incoming communications from connected clients and route them to the
- *  appropriate client recipient *
+ *  appropriate client recipient
  */
 public class Server extends JFrame
 {
-
-    /*
-        create global variables for a text box to display log information for the server
-        as well as two lists, one to hold references to each ServeAClient object so that
-        each client can be referenced and contacted as needed and one to hold a simple text
-        list of users who are currently active on the server to provide a simple means of
-        informing each client of the currently active users.
-     */
     /**
      *  The main text box, used to display log information for the server, such as client connect
-     *  events, updates to clients' user lists, etc.     *
+     *  events, updates to clients' user lists, etc.
      */
     private JTextArea serverLogs = new JTextArea();
 
     /**
      *  A list of ServeAClient objects to allow the server to reference the correct client when
-     *  receiving or transmitting a Communication object.     *
+     *  receiving or transmitting a Communication object.
      */
     private List<ServeAClient> activeClientList = new ArrayList<>();
 
@@ -46,6 +38,7 @@ public class Server extends JFrame
 
     /**
      *  The main method. Creates the Server object.
+     *  @param args Arguments passed when called via a terminal. Not used in this implementation.
      */
     public static void main(String[] args)
     {
@@ -140,6 +133,11 @@ public class Server extends JFrame
 
     }
 
+    /**
+     * Method to process a Communication object into an appropriate child object of the Communication class. <p></p>
+     * Currently only supports Message objects.
+     * @param communication The Communication object to be processed
+     */
     private void processACommunication (Communication communication)
     {
 
@@ -153,9 +151,14 @@ public class Server extends JFrame
                 break;
 
         }
+        //TODO: add code for alternative communication types.
 
     }
 
+    /**
+     * Method to route a Message object to its intended recipient client.
+     * @param message The Message object to be routed.
+     */
     private void routeAMessage(Message message)
     {
 
@@ -174,6 +177,10 @@ public class Server extends JFrame
 
     }
 
+    /**
+     * Method to send an updated UserList object to all connected clients. Called anytime a new client
+     * connects
+     */
     private void updateAllClientUserLists()
     {
         serverLogs.append("Updating all client user lists.\n");
@@ -192,6 +199,10 @@ public class Server extends JFrame
 
     }
 
+    /**
+     * Inner class designed to manage communications from each individual client that is connected to the
+     * server. Each instantiation of the class handles a single client.
+     */
     class ServeAClient implements Runnable
     {
 
@@ -200,6 +211,12 @@ public class Server extends JFrame
         private ObjectInputStream inputFromClient;
         private ObjectOutputStream outputToClient;
 
+        /**
+         * The default constructor. Initializes each instantiation with a socket connection and a name for the
+         * client it is serving, both of which are passed from the Server.
+         * @param socket The socket connection to the assigned client
+         * @param clientName The name of the assigned client.
+         */
         public ServeAClient(Socket socket, String clientName)
         {
 
@@ -218,6 +235,11 @@ public class Server extends JFrame
 
         }
 
+        @Override
+        /**
+         * Override of the Runnable.run() method. Constantly listens for communications from the assigned
+         * client.
+         */
         public void run()
         {
 
@@ -241,6 +263,10 @@ public class Server extends JFrame
 
         }
 
+        /**
+         * Method to handle incoming communications from the assigned client
+         * @return Communication object to be processed into a child object of Communication
+         */
         private Communication receive()
         {
             Communication communication;
@@ -262,6 +288,10 @@ public class Server extends JFrame
 
         }
 
+        /**
+         * Method to send a Communication object to the assigned client.
+         * @param communication The Communication object to be sent to the assigned client
+         */
         private void send(Communication communication)
         {
             try
@@ -275,6 +305,11 @@ public class Server extends JFrame
 
         }
 
+        /**
+         * Getter method for the client name. Used to identify the ServeAClient object associated with
+         * a specific client.
+         * @return String clientName - the name of the assigned client.
+         */
         private String getClientName()
         {
 
