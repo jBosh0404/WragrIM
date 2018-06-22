@@ -187,12 +187,13 @@ public class Server extends JFrame
     private void updateAllClientUserLists()
     {
         serverLogs.append("Updating all client user lists.\n");
-        UserList userList = new UserList(activeUsers, Communication.USERLIST);
+        UserList userList = new UserList(activeUsers);
         serverLogs.append("Userlist to be sent to all clients: " + userList.getUserList().toString() + "\n");
 
         for (int i = 0; i < activeClientList.size(); i++)
         {
 
+            userList.setClientID(activeClientList.get(i).clientName);
             activeClientList.get(i).send(userList);
             serverLogs.append("Userlist sent to " + activeClientList.get(i).getClientName() + ": " + userList.getUserList().toString() + "\n");
             serverLogs.append(activeClientList.get(i).getClientName() + " user list has been updated.\n");

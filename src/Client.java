@@ -23,6 +23,10 @@ public class Client extends JFrame
      */
     private JTextArea srText = new JTextArea();
     /**
+     * The String name of a client.
+     */
+    private String clientID = "";
+    /**
      * Text box to enter text to be sent to another client via the Server.
      */
     private JTextArea msgText = new JTextArea();
@@ -56,7 +60,6 @@ public class Client extends JFrame
      * Field to indicate that enter was pressed
      */
     private boolean enterPressed = false;
-
     /**
      * Provides the connection to the Server
      */
@@ -69,7 +72,6 @@ public class Client extends JFrame
      * Used to receive Communication objects from the Server
      */
     private ObjectInputStream objectInputStream;
-
     /**
      * Stores the IP address of the Server
      */
@@ -291,17 +293,25 @@ public class Client extends JFrame
         } else if (communication.getCommType() == Communication.USERLIST)
         {
 
-            //TODO: enter code to update user list UPDATE: I think I may have already done this? Uncertain.
             UserList userList = (UserList)communication;
+
+            if (clientID.equals(""))
+            {
+
+                clientID = userList.getClientID();
+                setTitle(userList.getClientID());
+
+            }
 
             if (jcUserList.getItemCount() == 0)
             {
 
                 for (int i = 0; i < userList.getUserList().size(); i++)
                 {
-
-                    jcUserList.addItem(userList.getUserList().get(i));
-
+                    if (!userList.getUserList().get(i).equals(clientID))
+                    {
+                        jcUserList.addItem(userList.getUserList().get(i));
+                    }
                 }
 
             } else
@@ -318,6 +328,12 @@ public class Client extends JFrame
             }
 
         }
+
+    }
+
+    private String getClientID() {
+
+        return clientID;
 
     }
 
@@ -338,7 +354,7 @@ public class Client extends JFrame
         public void actionPerformed(ActionEvent e)
         {
 
-            Message message = new Message(msgText.getText(), null, jcUserList.getItemAt(jcUserList.getSelectedIndex()), new Date(), Communication.MESSAGE);
+            Message message = new Message(msgText.getText(), getClientID(), jcUserList.getItemAt(jcUserList.getSelectedIndex()), new Date());
             srText.append("[" + new Date().getHours() + ":" + new Date().getMinutes() + "] Me: " + msgText.getText() + '\n');
             msgText.setText("");
 

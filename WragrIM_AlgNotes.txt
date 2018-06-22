@@ -43,7 +43,7 @@ The code to send a message from a ServeAClient object to a client needs to be ha
 Consider using a cached thread pool instead of individual threads for each socket connection. This may enhance performance by allowing a thread whose connection has ended to be used for a new connection
 rather than leaving it in memory while more threads are created for new connections.
 
-The Server only needs to parse received Communication objects into Message objects or Registration objects. 
+The Server only needs to parse received Communication objects into Message objects or Registration objects.
 
 
 ***SERVER NOTES***
@@ -118,6 +118,9 @@ be a message window, which is how it is currently set up. The main client window
 A new window can be generated with a list of active users that the user will select from. The client will then generate a MessageWindow object for that conversation. Consider calling the MessageWindow object a
 Conversation object. You may need to devise a way of multithreading each conversation so that a backup/bottleneck of messages from multiple senders does not occur.
 
+The client will need to be able to handle disconnections from the server end gracefully. This will likely involve a looped segment of code that keeps trying to reconnect to the server. This may require re-initializing
+the socket for each connection attempt. The loop should be controlled by the status of the connection and exit once a connection has been established. A wait period should be used in between connection attempts--30 seconds
+is what first occurs to me.
 
 ***CLIENT NOTES***
 

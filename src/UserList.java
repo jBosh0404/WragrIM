@@ -6,11 +6,12 @@ import java.util.List;
  */
 public class UserList implements Communication, Serializable
 {
+    private String clientID;
+
     /**
-     * The type of communication--in this case, Communication.USERLIST. May be explicitly assigned in a future iteration,
-     * as a UserList object would only ever have the commType Communication.USERLIST.
+     * Constant identifier for Communication subclass UserList
      */
-    private int commType;
+    private final int COMMTYPE = Communication.USERLIST;
     /**
      * The textual list of users to be encapsulated.
      */
@@ -19,13 +20,10 @@ public class UserList implements Communication, Serializable
     /**
      * The default constructor.
      * @param userList The textual list of users to be encapsulated
-     * @param commType The type of communication--in this case Communication.USERLIST. May be removed as a parameter in
-     *                 future iterations.
      */
-    public UserList(List<String> userList, int commType)
+    public UserList(List<String> userList)
     {
         this.userList = userList;
-        this.commType = commType;
     }
 
     /**
@@ -35,7 +33,7 @@ public class UserList implements Communication, Serializable
     @Override
     public int getCommType()
     {
-        return commType;
+        return COMMTYPE;
     }
 
     /**
@@ -45,6 +43,20 @@ public class UserList implements Communication, Serializable
     public List<String> getUserList()
     {
         return userList;
+    }
+
+    public String getClientID()
+    {
+
+        return clientID;
+
+    }
+
+    public void setClientID(String clientID)
+    {
+
+        this.clientID = clientID;
+
     }
 
 }

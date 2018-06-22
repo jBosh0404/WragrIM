@@ -3,16 +3,15 @@ import java.util.Date;
 
 /**
  * Creates a Message object to encapsulate a text-based message. Can include optional metadata, such as a Date object, a string
- * to represent the sender of the message, and a string to represent the recipient of the message. May consider removing
- * commType as a constructor parameter, as a Message object would only ever have the commType Communication.MESSAGE.
+ * to represent the sender of the message, and a string to represent the recipient of the message.
  */
 public class Message implements Communication, Serializable
 {
 
     /**
-     * The type of communication, in this case, Communication.MESSAGE.
+     * Constant identifier for Communication subclass Message.
      */
-    private int commType;
+    private final int COMMTYPE = Communication.MESSAGE;
     /**
      * The name of the sender of the Message object.
      */
@@ -33,13 +32,11 @@ public class Message implements Communication, Serializable
     /**
      * The default constructor. Encapsulates a textual message and the type of communication in a Message object.
      * @param message The textual message to be encapsulated
-     * @param commType The type of communication, in this case, Communication.MESSAGE. May be removed in a future iteration.
      */
-    public Message(String message, int commType)
+    public Message(String message)
     {
 
         this.message = message;
-        this.commType = commType;
 
     }
 
@@ -47,14 +44,12 @@ public class Message implements Communication, Serializable
      * Overloaded constructor. Adds a Date parameter.
      * @param message The textual message to be encapsulated
      * @param date The Date object to allow for timestamps of messages
-     * @param commType The type of communication, in this case, Communication.MESSAGE. May be removed in a future iteration.
      */
-    public Message(String message, Date date, int commType)
+    public Message(String message, Date date)
     {
 
         this.message = message;
         this.date = date;
-        this.commType = commType;
 
     }
 
@@ -64,16 +59,14 @@ public class Message implements Communication, Serializable
      * @param sender The textual name of the sender of the Message object
      * @param recipient The textual name of the recipient of the Message object
      * @param date The date object to allow for timestamps of messages
-     * @param commType The type of communication, in this case, Communication.MESSAGE. May be removed in a future iteration.
      */
-    public Message(String message, String sender, String recipient, Date date, int commType)
+    public Message(String message, String sender, String recipient, Date date)
     {
 
         this.message = message;
         this.sender = sender;
         this.recipient = recipient;
         this.date = date;
-        this.commType = commType;
 
     }
 
@@ -128,6 +121,6 @@ public class Message implements Communication, Serializable
     @Override
     public int getCommType()
     {
-        return commType;
+        return COMMTYPE;
     }
 }
