@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.CheckedInputStream;
 
 /**
  * Creates an IM client to send and receive messages to and from other clients via the Server.
@@ -91,7 +92,7 @@ public class Client extends JFrame
     public Client()
     {
 
-        serverIP = "10.0.0.69"; //JOptionPane.showInputDialog("Enter the LAN IP of the server. Client will not connect without this.");
+        serverIP = "10.0.0.43"; //JOptionPane.showInputDialog("Enter the LAN IP of the server. Client will not connect without this.");
         setSize(500, 350);
         setLayout(new BorderLayout());
         setResizable(false);
@@ -229,6 +230,7 @@ public class Client extends JFrame
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
 
+
             while(true)
             {
 
@@ -336,7 +338,7 @@ public class Client extends JFrame
         public void actionPerformed(ActionEvent e)
         {
 
-            Message message = new Message(msgText.getText(), new Date(), Communication.MESSAGE);
+            Message message = new Message(msgText.getText(), null, jcUserList.getItemAt(jcUserList.getSelectedIndex()), new Date(), Communication.MESSAGE);
             srText.append("[" + new Date().getHours() + ":" + new Date().getMinutes() + "] Me: " + msgText.getText() + '\n');
             msgText.setText("");
 

@@ -147,7 +147,10 @@ public class Server extends JFrame
             case (Communication.MESSAGE):
                 Message message = (Message)communication;
                 serverLogs.append(message.getMessage() + "\n");
-                routeAMessage(message);
+                if (message.getRecipient() != null)
+                {
+                    routeAMessage(message);
+                }
                 break;
 
         }
@@ -297,6 +300,7 @@ public class Server extends JFrame
             try
             {
                 outputToClient.writeObject(communication);
+                outputToClient.reset(); // reset the output stream to allow multiple transfers of the same object type
 
             }catch (IOException ex)
             {
