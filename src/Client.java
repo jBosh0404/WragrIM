@@ -1,17 +1,12 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.zip.CheckedInputStream;
 
 /**
  * Creates an IM client to send and receive messages to and from other clients via the Server.
