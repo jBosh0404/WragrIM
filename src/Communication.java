@@ -20,6 +20,13 @@ public interface Communication
     public static final int REGISTRATION = 2;
 
     /**
+     * Public constant to denote a Communication type as an OnlineStatus. Used by Server and Client to establish
+     * that a connection is active
+     */
+
+    public static final int ONLINESTATUS = 3;
+
+    /**
      * Getter method stub for the type of communication.
      * @return The type of communication, currently possibilities are Communication.MESSAGE and Communication.USERLIST.
      * Communication.REGISTRATION will be implemented in future iterations of the WragrIM project.

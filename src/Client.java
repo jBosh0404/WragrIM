@@ -76,20 +76,15 @@ public class Client extends JFrame
      * The main method. Creates a Client object.
      * @param args Arguments passed when called via a terminal -- not used in this implementation.
      */
-    public static void main(String[] args)
-    {
-
-        new Client();
-
-    }
+    public static void main(String[] args) { new Client(); }
 
     /**
-     * The default constructor. Initializes the GUI for Client objects and defines
+     * The default constructor. Initializes the GUI for Client objects and defines action listeners for the Send button
      */
     public Client()
     {
 
-        serverIP = "10.0.0.43"; //JOptionPane.showInputDialog("Enter the LAN IP of the server. Client will not connect without this.");
+        serverIP = "10.0.0.248"; //JOptionPane.showInputDialog("Enter the LAN IP of the server. Client will not connect without this.");
         setSize(500, 350);
         setLayout(new BorderLayout());
         setResizable(false);
@@ -355,7 +350,6 @@ public class Client extends JFrame
 
             try
             {
-
 
                 objectOutputStream.writeObject(message);
 

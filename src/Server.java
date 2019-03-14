@@ -151,8 +151,8 @@ public class Server extends JFrame
                 }
                 break;
 
+            //TODO: add code for alternative communication types.
         }
-        //TODO: add code for alternative communication types.
 
     }
 
@@ -208,7 +208,6 @@ public class Server extends JFrame
     class ServeAClient implements Runnable
     {
 
-        private Socket socket;
         private String clientName;
         private ObjectInputStream inputFromClient;
         private ObjectOutputStream outputToClient;
@@ -222,7 +221,6 @@ public class Server extends JFrame
         public ServeAClient(Socket socket, String clientName)
         {
 
-            this.socket = socket;
             this.clientName = clientName;
             try
             {
