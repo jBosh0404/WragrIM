@@ -378,7 +378,7 @@ public class Client extends JFrame
  * to alter the Message class to allow for a list of intended recipients of a message and modify the Server to allow for a message to be sent to multiple
  * recipients--though this shouldn't be too difficult; a simple 'for' loop to iterate through the list of recipients should suffice. A separate constructor
  * for the Conversation object will need to be implemented as the appearance of a Conversation window should change when more than 2 clients are involved
- * (Conversations involving 3 or more users shall henceforth be referred to as multicons. A list of users involved in the conversation should be presented in
+ * (Conversations involving 3 or more users shall henceforth be referred to as multicons). A list of users involved in the conversation should be presented in
  * some way--ideally in an unobtrusive fashion, such as a dropdown list of some kind. When a multicon is generated from an existing Conversation, the message
  * history of the conversation should be preserved for those users who had originally been involved.
  * The initiation of a multicon will likely require the use of a new Communication type I think I will call an Invitation. The Invitation object should include
