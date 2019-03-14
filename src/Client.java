@@ -362,6 +362,30 @@ public class Client extends JFrame
         }
 
     }
-
+/**
+ * ***NOTES***
+ * To implement a buddy list, it is likely I will have to encapsulate much of the code within this Server class within a new class BuddyList.
+ * I will need to devise a unique identifier for each conversation window that may be created so that the BuddyList will know which conversation
+ * should get which message. To that end I will need to establish a separate Conversation class that encapsulates an exchange of messages between
+ * two (or more--need to think about that) clients. I think unique long integers randomly generated when a message is first sent is the best way
+ * to denote which Conversation a message is intended for. I think the Server would be responsible for generating these unique identifiers and
+ * providing them to the BuddyLists involved in the conversation to be assigned to the Conversation object, and the Server would be responsible for keeping
+ * track of every unique Conversation identifier, though I may need to consider the ramifications of this. The current scope of this project shouldn't place
+ * too great of a resource strain on the server due to managing these Conversation identifiers, but should this project move beyond my current plans, it could
+ * prove to be a problem.
+ * In the event another participant enters the Conversation (though at present I don't know how this would be accomplished), the unique identifier would
+ * automatically be provided, though the question of having more than 2 clients involved in a Conversation raises questions about message routing. I may need
+ * to alter the Message class to allow for a list of intended recipients of a message and modify the Server to allow for a message to be sent to multiple
+ * recipients--though this shouldn't be too difficult; a simple 'for' loop to iterate through the list of recipients should suffice. A separate constructor
+ * for the Conversation object will need to be implemented as the appearance of a Conversation window should change when more than 2 clients are involved
+ * (Conversations involving 3 or more users shall henceforth be referred to as multicons. A list of users involved in the conversation should be presented in
+ * some way--ideally in an unobtrusive fashion, such as a dropdown list of some kind. When a multicon is generated from an existing Conversation, the message
+ * history of the conversation should be preserved for those users who had originally been involved.
+ * The initiation of a multicon will likely require the use of a new Communication type I think I will call an Invitation. The Invitation object should include
+ * the clientIDs of all users currently involved in the conversation, the ConversationID, and possibly an optional invitation message. To that end, I think the
+ * Invitation class should extend the Message class. Upon receipt of an Invitation object by a client, a dialog box should be displayed with the optional message
+ * and button options yes and no to indicate whether the receiving client would like to join the conversation. The BuddyList would then create the multicon Conversation
+ * object from the provided clientIDs and ConversationID of the Invitation object.
+ */
 
 }
