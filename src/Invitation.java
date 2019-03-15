@@ -26,8 +26,8 @@ public class Invitation implements Communication
     /**
      * Constructor that initializes an Invitation object with the provided conversation ID and client IDs and
      * a default invitation message
-     * @param convID The integer 
-     * @param clientIDs
+     * @param convID The integer unique identifier for the originating Conversation
+     * @param clientIDs The String list of unique identifiers for the users involved in the originating Conversation
      */
     public Invitation (int convID, String[] clientIDs)
     {
