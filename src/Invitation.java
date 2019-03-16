@@ -4,7 +4,7 @@ public class Invitation implements Communication
 {
 
     /**
-     * The integer ID of the originating Conversation
+     * The integer unique identifier of the originating Conversation
      */
     private int convID;
 
@@ -14,9 +14,14 @@ public class Invitation implements Communication
     private String[] clientIDs;
 
     /**
-     * The String recipient of the Invitation
+     * The String unique identifier for the recipient of the Invitation
      */
     private String recipientID;
+
+    /**
+     * The String unique identifier for the user sending the Invitation
+     */
+    private String senderID;
 
     /**
      * The optional String message provided by a user from the originating Conversation
@@ -24,44 +29,60 @@ public class Invitation implements Communication
     private String message;
 
     /**
-     * Constructor that initializes an Invitation object with the provided conversation ID and client IDs and
-     * a default invitation message
+     * Constructor that initializes an Invitation object with the provided conversation ID, client IDs, recipient ID,
+     * sender ID, and a default invitation message.
      * @param convID The integer unique identifier for the originating Conversation
      * @param clientIDs The String list of unique identifiers for the users involved in the originating Conversation
+     * @param recipientID The String unique identifier for the recipient of the Invitation
+     * @param senderID The String unique identifier for the user sending the Invitation
      */
-    public Invitation (int convID, String[] clientIDs)
+    public Invitation (int convID, String[] clientIDs, String recipientID, String senderID)
     {
 
         this.convID = convID;
         this.clientIDs = clientIDs;
-        this.message = "You have an invitation to join a conversation with ";
+        this.recipientID = recipientID;
+        this.message = senderID + "has sent you an invitation to join them in a conversation with ";
 
         for (int i = 0; i < clientIDs.length; i++)
         {
 
-            if (i < clientIDs.length - 1 && clientIDs.length == 2)
+            if (!clientIDs[i].equals(senderID))
             {
 
-                this.message += "" + clientIDs[i] + "and ";
+                if (i < clientIDs.length - 1 && clientIDs.length == 2)
+                {
 
-            } else if (i < clientIDs.length - 1 && clientIDs.length > 2)
-            {
+                    this.message += "" + clientIDs[i] + "and ";
 
-                this.message += "" + clientIDs[i] + ", ";
 
-            } else if  (i == clientIDs.length - 1 && clientIDs.length == 2)
-            {
+                } else if (i < clientIDs.length - 1 && clientIDs.length > 2)
+                {
 
-                this.message += "" + clientIDs[i] + "!";
+                    this.message += "" + clientIDs[i] + ", ";
 
-            } else if (i == clientIDs.length - 1 && clientIDs.length > 2)
-            {
+                } else if (i == clientIDs.length - 1 && clientIDs.length == 2)
+                {
 
-                this.message += ", and" + clientIDs[i] + "!";
+                    this.message += "" + clientIDs[i] + "!";
 
+                } else if (i == clientIDs.length - 1 && clientIDs.length > 2)
+                {
+
+                    this.message += ", and" + clientIDs[i] + "!";
+
+                }
             }
-
         }
+    }
+
+    public Invitation (int convID, String[] clientIDs, String recipientID, String senderID, String message)
+    {
+
+        this.convID = convID;
+        this.clientIDs = clientIDs;
+        this.recipientID = recipientID;
+        this.senderID = senderID;
 
     }
 
@@ -99,6 +120,24 @@ public class Invitation implements Communication
     public String[] getClientIDs()
     {
         return clientIDs;
+    }
+
+    /**
+     * Setter method for the String unique identifier of the recipient of the Invitation
+     * @param recipientID The String unique identifier of the recipient of the Invitation
+     */
+    public void setRecipientID(String recipientID)
+    {
+        this.recipientID = recipientID;
+    }
+
+    /**
+     * Getter method for the String unique identifier of the recipient of the Invitation
+     * @return The String unique identifier of the recipient of the Invitation
+     */
+    public String getRecipientID()
+    {
+        return recipientID;
     }
 
     /**

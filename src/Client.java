@@ -141,7 +141,6 @@ public class Client extends JFrame
                         sendBtn.doClick();
 
                     }
-
                 }
 
                 /**
@@ -168,7 +167,6 @@ public class Client extends JFrame
                             msgText.setText("");
 
                         }
-
                     }
 
                     if (e.getKeyCode() == shift)
@@ -177,7 +175,6 @@ public class Client extends JFrame
                         shiftPressed = false;
 
                     }
-
                 }
 
                 /**
@@ -240,7 +237,6 @@ public class Client extends JFrame
             this.dispose();*/
 
         }
-
     }
 
     /**
@@ -263,7 +259,6 @@ public class Client extends JFrame
             System.err.println("What the fuck, man? We couldn't find that class. GG, buddy.\n" + cnfe);
 
         }
-
     }
 
     /**
@@ -314,11 +309,8 @@ public class Client extends JFrame
                     jcUserList.addItem(userList.getUserList().get(i));
 
                 }
-
             }
-
         }
-
     }
 
     private String getClientID() {
@@ -360,8 +352,8 @@ public class Client extends JFrame
 
             }
         }
-
     }
+}
 /**
  * ***NOTES***
  * To implement a buddy list, it is likely I will have to encapsulate much of the code within this Server class within a new class BuddyList.
@@ -373,6 +365,23 @@ public class Client extends JFrame
  * track of every unique Conversation identifier, though I may need to consider the ramifications of this. The current scope of this project shouldn't place
  * too great of a resource strain on the server due to managing these Conversation identifiers, but should this project move beyond my current plans, it could
  * prove to be a problem.
+ *
+ * Further to the implementation of a BuddyList, I will need to create a login window that is the first graphical manifestation of the client program
+ * that end-users will encounter. This does not need to be its own separate class, I think. I believe I can accomplish this with an inner class inside the
+ * BuddyList class, or possibly without the use of a class at all. I should be able to design the BuddyList class such that it creates the login window
+ * and does not generate the actual BuddyList interface until a successful login has been established. This will be the point at which the BuddyList class
+ * initializes the connection with the Server. The login interface should have an option for registration, which will open a new window with a form to be
+ * completed. Fields for this form would be name, username (which will serve as the clientID), password fields (though I may decide against this as it
+ * could pose a security risk since I'm making no efforts to encrypt anything, and it is likely that some people may use passwords that they have used
+ * for other applications), and possibly a few others I haven't thought of just yet. Once the registration form has been filled out, it will be encapsulated
+ * in a Registration object that implements the Communications interface and then sent to the Server to be stored and referenced for login attempts. I will also
+ * need to implement some way of allowing users to alter their registration details after they have registered, and since I think I want registration information
+ * stored solely on the server side, I will likely need to design another Communication type that queries the server for registration information. This would be
+ * triggered anytime a user opened a Profile section of the BuddyList, which I think might need to be its own class, though possibly an inner class of the BuddyList
+ * class. When a change is made to the profile information and saved, the updated registration information can be retransmitted to the server as a Registration
+ * object, and I can include a field in the Registration object that denotes the status of the Registration object; whether it is a new registration or an
+ * updated one.
+ *
  * In the event another participant enters the Conversation (though at present I don't know how this would be accomplished), the unique identifier would
  * automatically be provided, though the question of having more than 2 clients involved in a Conversation raises questions about message routing. I may need
  * to alter the Message class to allow for a list of intended recipients of a message and modify the Server to allow for a message to be sent to multiple
@@ -381,11 +390,10 @@ public class Client extends JFrame
  * (Conversations involving 3 or more users shall henceforth be referred to as multicons). A list of users involved in the conversation should be presented in
  * some way--ideally in an unobtrusive fashion, such as a dropdown list of some kind. When a multicon is generated from an existing Conversation, the message
  * history of the conversation should be preserved for those users who had originally been involved.
+ *
  * The initiation of a multicon will likely require the use of a new Communication type I think I will call an Invitation. The Invitation object should include
  * the clientIDs of all users currently involved in the conversation, the ConversationID, and possibly an optional invitation message. To that end, I think the
  * Invitation class should extend the Message class. Upon receipt of an Invitation object by a client, a dialog box should be displayed with the optional message
  * and button options yes and no to indicate whether the receiving client would like to join the conversation. The BuddyList would then create the multicon Conversation
  * object from the provided clientIDs and ConversationID of the Invitation object.
  */
-
-}
